@@ -1,0 +1,8 @@
+export const SAVE = 'SAVE'
+export const FIND = 'FIND'
+export const FILM_INFO = 'FILM_INFO'
+export const SAVE_FAVORITE = 'SAVE_FAVORITE'
+export const DELETE_FAVORITE = 'DELETE_FAVORITE'
+export const LOADING = 'LOADING'
+export const ERROR = 'ERROR'
+export const VALUE = 'VALUE'
