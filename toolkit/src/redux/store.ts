@@ -1,7 +1,7 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import {filmsReducer} from "./films.reducer";
-import {favoriteFilmsReducer} from "./favorite-films.reducer";
-import {searchReducer} from "./search.reducer";
+import filmsReducer from "./films.reducer";
+import searchReducer from "./search.reducer";
+import favoriteFilmsReducer from "./favorite-films.reducer";
 
 
 const rootReducer = combineReducers({
@@ -12,7 +12,8 @@ const rootReducer = combineReducers({
 
 export const setupStore = () => {
     return configureStore({
-        reducer: rootReducer
+        reducer: rootReducer,
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware()
     })
 }
 

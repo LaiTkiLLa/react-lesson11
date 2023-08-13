@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from "react";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {saveFilms, setValue} from "../redux/films.reducer";
+import {save, value} from "../redux/films.reducer";
 import {AxiosApi} from "../api/api";
 import {setError, setFind, setLoading} from "../redux/search.reducer";
 import {Loader} from "../components/loader.component";
@@ -11,11 +11,11 @@ import {ErrorPage} from "./error.page";
 export const MainPage: React.FC = () => {
 
     const dispatch = useAppDispatch()
-    const {title} = useAppSelector(state => state.films)
+    const title = useAppSelector(state => state.films.title)
     const {loading, error, found} = useAppSelector(state => state.search)
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setValue({title: e.target.value}))
+        dispatch(value(e.target.value))
     }
     const handleSubmit = async (e: any) => {
         e.preventDefault()
@@ -30,7 +30,7 @@ export const MainPage: React.FC = () => {
                 if (films?.data?.Response === "False") {
                     return dispatch(setError(films.data.Error))
                 }
-                return dispatch(saveFilms({...films?.data?.Search}))
+                return dispatch(save({...films?.data?.Search}))
             } catch (error: any) {
                 dispatch(setFind(true))
                 dispatch(setLoading(false))

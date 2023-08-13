@@ -1,42 +1,27 @@
-import {FILM_INFO, FIND, SAVE, VALUE} from "../actions/actions";
-import {Action, FilmInfo, Films, InitialStateT} from "../types/data.type";
+import {AllFilmsDescription, FilmInfo, InitialStateT} from "../types/data.type";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export const InitialState: InitialStateT = {
     title: '',
     films: {},
-    film: {}
 }
 
-export const filmsReducer = (state = InitialState, action: Action) => {
-    switch (action.type) {
-        case VALUE:
-            return {...state, title: action.payload.title}
-        case SAVE:
-            return {title: state.title, films: action.payload}
-        case FILM_INFO:
-            return {title: state.title, film: action.payload}
-        default:
-            return state
+export const filmsSlice = createSlice({
+    name: 'films',
+    initialState: InitialState,
+    reducers: {
+        value: (state, action: PayloadAction<string>) => {
+            return {...state, title: action.payload}
+        },
+        save: (state, action: PayloadAction<AllFilmsDescription>) => {
+            console.log(action)
+            return {...state, films: action.payload}
+        },
+        setFilmInfo: (state, action: PayloadAction<FilmInfo>) => {
+            return {...state, film: action.payload}
+        }
     }
-}
+})
 
-export const saveFilms = (payload: Films ) => {
-    return {
-        type: SAVE,
-        payload
-    }
-}
-
-export const setValue = (payload: any) => {
-    return {
-        type: VALUE,
-        payload
-    }
-}
-
-export const saveFilmInfo = (payload: FilmInfo | undefined) => {
-    return {
-        type: FILM_INFO,
-        payload
-    }
-}
+export const {value, save, setFilmInfo} = filmsSlice.actions
+export default filmsSlice.reducer

@@ -1,29 +1,20 @@
-import {Action, FilmInfo} from "../types/data.type";
-import {DELETE_FAVORITE, SAVE_FAVORITE} from "../actions/actions";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {FilmInfo} from "../types/data.type";
 
 export let InitialState: any = []
-export const favoriteFilmsReducer = (state = InitialState, action: Action) => {
-    switch (action.type) {
-        case SAVE_FAVORITE:
+
+export const favoriteFilmsSlice = createSlice({
+    name: 'favoriteFilms',
+    initialState: InitialState,
+    reducers: {
+        saveFavorite: (state, action: PayloadAction<FilmInfo | undefined>) => {
             return [...state, action.payload]
-        case DELETE_FAVORITE:
-            return [state.filter(({film}: FilmInfo) => film?.imdbID !== action.payload)]
-        default:
-            return state
-
+        },
+        deleteFavorite: (state, action: PayloadAction<string>) => {
+            return [state.filter(({film}: {film: FilmInfo}) => film?.imdbID !== action.payload)]
+        }
     }
-}
+})
 
-export const saveToFavorite = (payload: any) => {
-    return {
-        type: SAVE_FAVORITE,
-        payload
-    }
-}
-
-export const deleteFavorite = (payload: any) => {
-    return {
-        type: DELETE_FAVORITE,
-        payload
-    }
-}
+export const {saveFavorite, deleteFavorite} = favoriteFilmsSlice.actions
+export default favoriteFilmsSlice.reducer

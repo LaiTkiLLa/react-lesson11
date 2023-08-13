@@ -1,6 +1,4 @@
-import {Action} from "../types/data.type";
-import {ERROR, FIND, LOADING} from "../actions/actions";
-
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export const InitialState = {
     loading: false,
@@ -8,36 +6,21 @@ export const InitialState = {
     found: false
 }
 
-export const searchReducer = (state = InitialState, action: Action) => {
-    switch (action.type) {
-        case FIND:
+export const searchSlice = createSlice({
+    name: 'search',
+    initialState: InitialState,
+    reducers: {
+        setFind: (state,action: PayloadAction<boolean>) => {
             return {...state, found: action.payload}
-        case LOADING:
+        },
+        setLoading: (state,action: PayloadAction<boolean>) => {
             return {...state, loading: action.payload}
-        case ERROR:
+        },
+        setError: (state,action: PayloadAction<string>) => {
             return {...state, error: action.payload}
-        default:
-            return state;
+        }
     }
-}
+})
 
-export const setLoading = (payload: boolean) => {
-    return {
-        type: LOADING,
-        payload
-    }
-}
-
-export const setError = (payload: string) => {
-    return {
-        type: ERROR,
-        payload
-    }
-}
-
-export const setFind = (payload: boolean) => {
-    return {
-        type: FIND,
-        payload
-    }
-}
+export const {setFind, setLoading, setError} = searchSlice.actions
+export default searchSlice.reducer
